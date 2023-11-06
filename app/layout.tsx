@@ -1,9 +1,7 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
 import './globals.css'
 import Header from "@/app/ui/header";
-
-const inter = Inter({ subsets: ['latin'] })
+import localFont from 'next/font/local'
 
 export const metadata: Metadata = {
   title: 'Bloxberg certify app',
@@ -14,15 +12,19 @@ export const metadata: Metadata = {
   }
 }
 
+const montserrat_font = localFont({
+  src: '../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
+  variable: '--font-montserrat',
+})
+
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className + " min-h-screen bg-bloxberg-blue-800"}>
-        {/* Include shared UI here e.g. a header or sidebar */}
+    <html lang="en" className={`${montserrat_font.variable}`}>
+      <body className={"font-bloxberg font-normal min-h-screen bg-bloxberg-blue-800"}>
         <Header></Header>
         {children}
       </body>

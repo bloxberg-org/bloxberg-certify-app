@@ -8,6 +8,9 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        bloxberg: ['var(--font-montserrat)'],
+      },
       colors: {
         'bloxberg-black': '#000',
         'bloxberg-white': '#fff',
@@ -23,12 +26,8 @@ const config: Config = {
           900: '#133944',
           950: '#1c2b36',
         },
-        'bloxberg-red': {
-          100: '#e01d6c',
-        },
-        'bloxberg-grey': {
-          100: '#EBE9E9',
-        },
+        'bloxberg-red': '#e01d6c',
+        'bloxberg-grey': '#EBE9E9',
       },
     },
   },
