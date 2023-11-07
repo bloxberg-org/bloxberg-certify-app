@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import bloxbergLogo from '@/assets/images/bloxberg_logo_header.webp'
+import bloxbergLogo from '@/public/images/bloxberg_logo_header.webp'
 
 export default function Header() {
     return (
@@ -10,7 +10,7 @@ export default function Header() {
                     <Image
                         src={bloxbergLogo}
                         alt="bloxberg logo"
-                        className={"m-5"}
+                        className={"mt-5 mb-5 mr-5"}
                         style={{
                             height: '47px',
                             width: 'auto'

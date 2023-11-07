@@ -28,6 +28,7 @@ const config: Config = {
         },
         'bloxberg-red': '#e01d6c',
         'bloxberg-grey': '#EBE9E9',
+        'bloxberg-blue-grey': '#50626E'
       },
     },
   },

@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import './boxicons.css'
 import './globals.css'
 import Header from "@/app/ui/header";
 import localFont from 'next/font/local'
@@ -26,7 +27,9 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat_font.variable}`}>
       <body className={"font-bloxberg font-normal min-h-screen bg-bloxberg-blue-800"}>
         <Header></Header>
-        {children}
+        <main className="mx-auto my-0 py-10 h-full bg-bloxberg-blue-800 max-w-screen-xl">
+          {children}
+        </main>
       </body>
     </html>
   )
