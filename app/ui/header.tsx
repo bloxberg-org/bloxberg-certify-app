@@ -5,7 +5,7 @@ import bloxbergLogo from '@/public/images/bloxberg_logo_header.webp'
 export default function Header() {
     return (
         <nav className="h-[118px] bg-bloxberg-blue-950 px-4 py-6 flex justify-center items-center">
-            <div className="flex max-w-screen-xl w-full justify-between justify-center items-center">
+            <div className="flex max-w-screen-lg w-full justify-between justify-center items-center">
                 <Link href={`/`}>
                     <Image
                         src={bloxbergLogo}

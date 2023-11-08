@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 }
 
 const montserrat_font = localFont({
-  src: '../assets/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
+  src: '../public/fonts/Montserrat/Montserrat-VariableFont_wght.ttf',
   variable: '--font-montserrat',
 })
 
@@ -27,7 +27,7 @@ export default function RootLayout({
     <html lang="en" className={`${montserrat_font.variable}`}>
       <body className={"font-bloxberg font-normal min-h-screen bg-bloxberg-blue-800"}>
         <Header></Header>
-        <main className="mx-auto my-0 py-10 h-full bg-bloxberg-blue-800 max-w-screen-xl">
+        <main className="mx-auto my-0 py-10 h-full bg-bloxberg-blue-800 max-w-screen-lg">
           {children}
         </main>
       </body>

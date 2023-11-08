@@ -1,39 +1,27 @@
 'use client'
 
-import RadioButton from "@/app/ui/radio-button";
 import React from "react";
+import RadioSelection from "@/app/ui/radio-selection";
+import TextInput from "@/app/ui/text-input";
+import FileUpload from "@/app/ui/file-upload";
 
-export default function StepHash() {
-    const [hashTpe, setHashType] = React.useState('file');
-
-    const handleFileChange = () => {
-        setHashType('file');
-    };
-
-    const handleStringChange = () => {
-        setHashType('string');
+export default function StepHash({disabledInput}:{disabledInput:boolean}) {
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const onSelected = (selectedIndex: number) => {
+        setSelectedIndex(selectedIndex)
     };
 
     return (
         <div>
-            <h3 className="font-medium text-bloxberg-grey text-2xl pb-2">How would you like to generate the hash?</h3>
-            <div className="flex justify-evenly pb-2">
-                <RadioButton
-                    label="Generate from file(s)"
-                    value={hashTpe === 'file'}
-                    onChange={handleFileChange}
-                />
-                <RadioButton
-                    label="Manual entry"
-                    value={hashTpe === 'string'}
-                    onChange={handleStringChange}
-                />
+            <h3 className="font-medium text-bloxberg-grey text-2xl pb-4">How would you like to generate the hash?</h3>
+            <div className="pb-4">
+                <RadioSelection disabledInput={disabledInput} labels={["Generate from file(s)", "Manual entry"]} selectedIndex={selectedIndex} onSelected={onSelected}></RadioSelection>
             </div>
 
-            {hashTpe === 'string' ? (
-                <input className="py-2 px-3 text-bloxberg-blue-800 bg-bloxberg-blue-200 border border-bloxberg-blue-200 border-solid h-10 font-normal text-base w-full focus:border-bloxberg-red focus:shadow-[0_0_0_0.2rem_theme(colors.bloxberg-red/0.25)] focus-visible:outline-0"></input>
+            {selectedIndex === 0 ? (
+                <FileUpload disabledInput={disabledInput}></FileUpload>
             ) : (
-                <input className="py-2 px-3 text-bloxberg-blue-800 bg-bloxberg-blue-200 border border-bloxberg-blue-200 border-solid h-10 font-normal text-base w-full focus:border-bloxberg-red focus:shadow-[0_0_0_0.2rem_theme(colors.bloxberg-red/0.25)] focus-visible:outline-0"></input>
+                <TextInput labelText="Enter hash manually" labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
             )}
         </div>
     )

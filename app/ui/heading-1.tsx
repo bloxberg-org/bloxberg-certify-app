@@ -1,7 +1,3 @@
-import Link from "next/link";
-import Image from "next/image";
-import bloxbergLogo from "@/assets/images/bloxberg_logo_header.webp";
-
 export default function Heading1({title}: {title: string}) {
     return (
         <div className="mb-12 relative">
