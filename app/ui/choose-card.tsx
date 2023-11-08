@@ -21,7 +21,7 @@ export default function ChooseCard({title, description, url, imgSrc, imgSrcHover
                     className="mx-auto my-0"
                     style={{
                         height: '290px',
-                        width: 'auto'
+                        width: 'fit-content',
                     }}>
                 </Image>
             ) : (
@@ -31,7 +31,7 @@ export default function ChooseCard({title, description, url, imgSrc, imgSrcHover
                     className="mx-auto my-0"
                     style={{
                         height: '290px',
-                        width: 'auto'
+                        width: 'fit-content',
                     }}>
                 </Image>
             )}

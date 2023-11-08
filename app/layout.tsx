@@ -1,6 +1,5 @@
 import type { Metadata } from 'next'
-import './boxicons.css'
-import './globals.css'
+import '@/app/ui/globals.css'
 import Header from "@/app/ui/header";
 import localFont from 'next/font/local'
 
