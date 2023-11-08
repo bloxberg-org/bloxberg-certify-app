@@ -10,7 +10,8 @@ export const metadata: Metadata = {
   authors: {
     name: 'Felix Riehm',
     url: 'https://github.com/felixriehm'
-  }
+  },
+
 }
 
 const montserrat_font = localFont({
