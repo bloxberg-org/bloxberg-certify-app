@@ -2,7 +2,7 @@
 
 import Heading1 from "@/app/ui/heading-1";
 import React from "react";
-import certifyIconWhite from "@/public/images/icons_thin/4_white.svg";
+import certifyIcon from "@/public/images/icons_thin/4.svg";
 import Image from "next/image";
 import Progression from "@/app/certify/progression";
 
@@ -14,7 +14,7 @@ export default function Certify() {
                     <Heading1 title="Certify"></Heading1>
                     <p className="text-2xl font-medium text-bloxberg-grey mb-20">Certify your Research Data on the blockchain.</p>
                 </div>
-                <Image src={certifyIconWhite} alt="certify logo" style={{
+                <Image src={certifyIcon} alt="certify logo" style={{
                     width: "207px"
                 }}></Image>
             </div>

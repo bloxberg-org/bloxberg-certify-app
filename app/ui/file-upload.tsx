@@ -1,8 +1,8 @@
 import {ChangeEvent, Dispatch, DragEvent, SetStateAction, useRef, useState} from "react";
 import { twMerge } from 'tailwind-merge'
 
-export default function FileUpload({disabledInput, onSelectedFileListChanged}:{disabledInput?:boolean,
-    onSelectedFileListChanged: (fileList: FileList) => void}) {
+export default function FileUpload({disabledInput, onSelectedFileListChanged, textUnderlined, minorText}:{disabledInput?:boolean,
+    onSelectedFileListChanged: (fileList: FileList) => void, textUnderlined: string, minorText: string}) {
     const [selectedFileList, setSelectedFileList] = useState<FileList | null>(null);
     const [dragActive, setDragActive] = useState(false);
     const inputFile = useRef<HTMLInputElement | null>(null);
@@ -55,7 +55,7 @@ export default function FileUpload({disabledInput, onSelectedFileListChanged}:{d
         <div className={twMerge(`relative min-w-[400px] w-full min-h-200 h-fit bg-transparent px-7 py-5 cursor-pointer bloxberg-file-upload ${disabledInput ? "pointer-events-none" : ""}`, `${dragActive ? "bg-bloxberg-blue-200" : ""}`)} onClick={onSelectFilesClick}
              onDragEnter={handleDrag}>
             <input type="file" className="hidden" ref={inputFile} onChange={onFileChange} multiple/>
-            <div className="text-center text-bloxberg-blue-100 font-medium text-xl mb-4"><i className='bx bx-upload relative top-0.5'></i> <u>Choose file</u> or drag and drop files here</div>
+            <div className="text-center text-bloxberg-blue-100 font-medium text-xl mb-4"><i className='bx bx-upload relative top-0.5'></i> <u>{textUnderlined}</u> {minorText}</div>
             {getSelectedFilesHtml(selectedFileList)}
             { dragActive && <div className={"absolute w-full h-full top-0 bottom-0 left-0 right-0"} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
         </div>

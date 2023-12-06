@@ -2,15 +2,13 @@ import type { Metadata } from 'next'
 import '@/app/ui/globals.css'
 import Header from "@/app/ui/header";
 import localFont from 'next/font/local'
-
 export const metadata: Metadata = {
-  title: 'Bloxberg certify app',
+  title: 'bloxberg certify app',
   description: 'Certify and verify your scientific documents.',
   authors: {
     name: 'Felix Riehm',
     url: 'https://github.com/felixriehm'
   },
-
 }
 
 const montserrat_font = localFont({

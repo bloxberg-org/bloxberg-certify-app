@@ -56,7 +56,8 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
             </div>
 
             {selectedIndex === 0 ? (
-                <FileUpload disabledInput={disabledInput} onSelectedFileListChanged={onSelectedFileListChanged}></FileUpload>
+                <FileUpload disabledInput={disabledInput} onSelectedFileListChanged={onSelectedFileListChanged}
+                textUnderlined={"Choose file"} minorText={"or drag and drop files here"}></FileUpload>
             ) : (
                 <TextInput labelText="Enter hash manually" onChangeHandler={textInputChangeHandler} labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
             )}
