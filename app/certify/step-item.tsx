@@ -5,10 +5,12 @@ import React, {MouseEventHandler} from "react";
 import Image from "next/image";
 
 export default function StepItem({id, stepTitle, currentIndex, stepItemIndex, maxStepIndex, primaryActionTitle, primaryAction,
-                                     secondaryAction, stepContent, disabledInput, isLoading, isLoadingPrimaryActionTitle="loading"} :
+                                     secondaryAction, stepContent, disabledInput, isLoading, isLoadingPrimaryActionTitle="loading",
+                                     errors} :
 {id: string, stepTitle: string, currentIndex: number, stepItemIndex: number, maxStepIndex: number, primaryActionTitle: string,
     primaryAction: MouseEventHandler<HTMLButtonElement> | undefined, secondaryAction: MouseEventHandler<HTMLButtonElement> | undefined,
-    stepContent:  React.JSX.Element | undefined, disabledInput?:boolean, isLoading?: boolean, isLoadingPrimaryActionTitle?: string}) {
+    stepContent:  React.JSX.Element | undefined, disabledInput?:boolean, isLoading?: boolean, isLoadingPrimaryActionTitle?: string,
+    errors: Map<string, string[]>}) {
     return (
         <li className={`relative pb-16 w-full ${stepItemIndex > currentIndex ? "opacity-20" : ""}`} id={id}>
             {stepItemIndex !== maxStepIndex ?
@@ -24,7 +26,21 @@ export default function StepItem({id, stepTitle, currentIndex, stepItemIndex, ma
                             {stepContent}
                         </div>
                      : null}
-
+                    {errors.size !== 0 ?
+                        (
+                            <div className={"py-2 text-bloxberg-red font-bold text-center"}>
+                                {Array.from( errors.values() ).map((errors, mainIndex) => (
+                                    errors.map((errorText, index)=>(
+                                        <span key={`${mainIndex}${index}`}>
+                                    <i className={`bx bxs-error font-light top-[1px] relative pr-1`}></i>
+                                            {errorText}
+                                  </span>
+                                    ))
+                                ))}
+                            </div>
+                        ): (
+                            <></>
+                        )}
                     <div className={`flex justify-between ${currentIndex !== stepItemIndex ? "hidden" : ""}`}>
                         {currentIndex !== 0 && currentIndex !== maxStepIndex ? (
                             <SecondaryButton title="back" onClick={secondaryAction} disabledInput={isLoading}></SecondaryButton>

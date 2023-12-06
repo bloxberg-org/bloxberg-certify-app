@@ -1,14 +1,51 @@
-'use client'
-
-import React from "react";
+import React, {ChangeEvent, useContext, useState} from "react";
 import RadioSelection from "@/app/ui/radio-selection";
 import TextInput from "@/app/ui/text-input";
 import FileUpload from "@/app/ui/file-upload";
+import {CertifyData} from "@/app/certify/progression";
 
-export default function StepHash({disabledInput}:{disabledInput:boolean}) {
+export default function StepHash({disabledInput, setErrors}:{disabledInput:boolean, setErrors: React.Dispatch<React.SetStateAction<Map<string, string[]>>>}) {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const {setCrid } = useContext(CertifyData);
     const onSelected = (selectedIndex: number) => {
+        setCrid([])
         setSelectedIndex(selectedIndex)
+    };
+
+    const onSelectedFileListChanged = (selectedFileList: FileList) => {
+        let errors = new Map()
+        let newCrid: string[] = []
+        Array.from(selectedFileList)?.forEach((file: File, index) => {
+            try {
+                let reader = new window.FileReader()
+                reader.readAsArrayBuffer(file)
+                reader.onloadend = () => {
+                    try {
+                        // let wordArray = CryptoJS.lib.WordArray.create(reader.result)
+                        // let hash = CryptoJS.SHA256(wordArray).toString()
+                        let hash = "test"
+                        newCrid.push(hash)
+                    } catch (err) {
+                        setCrid([])
+                        errors.set("file", ["There was an error when creating the hashsum for file " + file.name])
+                        setErrors(errors)
+                        console.log(err)
+                        return
+                    }
+                }
+            } catch (err) {
+                setCrid([])
+                errors.set("file", ["There was an error when reading the file " + file.name])
+                console.log(err)
+                return
+            }
+        })
+        setErrors(errors)
+        setCrid(newCrid)
+    }
+
+    const textInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
+        setCrid([event.target.value])
     };
 
     return (
@@ -19,9 +56,9 @@ export default function StepHash({disabledInput}:{disabledInput:boolean}) {
             </div>
 
             {selectedIndex === 0 ? (
-                <FileUpload disabledInput={disabledInput}></FileUpload>
+                <FileUpload disabledInput={disabledInput} onSelectedFileListChanged={onSelectedFileListChanged}></FileUpload>
             ) : (
-                <TextInput labelText="Enter hash manually" labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
+                <TextInput labelText="Enter hash manually" onChangeHandler={textInputChangeHandler} labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
             )}
         </div>
     )

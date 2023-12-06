@@ -1,7 +1,8 @@
-import {ChangeEvent, DragEvent, useRef, useState} from "react";
+import {ChangeEvent, Dispatch, DragEvent, SetStateAction, useRef, useState} from "react";
 import { twMerge } from 'tailwind-merge'
 
-export default function FileUpload({disabledInput}:{disabledInput?:boolean}) {
+export default function FileUpload({disabledInput, onSelectedFileListChanged}:{disabledInput?:boolean,
+    onSelectedFileListChanged: (fileList: FileList) => void}) {
     const [selectedFileList, setSelectedFileList] = useState<FileList | null>(null);
     const [dragActive, setDragActive] = useState(false);
     const inputFile = useRef<HTMLInputElement | null>(null);
@@ -13,6 +14,7 @@ export default function FileUpload({disabledInput}:{disabledInput?:boolean}) {
     const onReceiveFiles = (fileList: FileList | null) => {
         if(fileList && fileList.length > 0){
             setSelectedFileList(fileList)
+            onSelectedFileListChanged(fileList)
         }
     }
 

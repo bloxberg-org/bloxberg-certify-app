@@ -43,9 +43,9 @@ export default function Verify() {
 
                 <div className="pb-4">
                     {selectedVerificationType === 0 ? (
-                        <TextInput labelText="Certificate URL"  disabledInput={isVerifying}></TextInput>
+                        <TextInput onChangeHandler={(e)=> {}} labelText="Certificate URL"  disabledInput={isVerifying}></TextInput>
                     ) : (
-                        <FileUpload disabledInput={isVerifying}></FileUpload>
+                        <FileUpload onSelectedFileListChanged={(e)=> {}} disabledInput={isVerifying}></FileUpload>
                     )}
                 </div>
 
