@@ -21,10 +21,13 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
                 reader.readAsArrayBuffer(file)
                 reader.onloadend = () => {
                     try {
-                        // let wordArray = CryptoJS.lib.WordArray.create(reader.result)
-                        // let hash = CryptoJS.SHA256(wordArray).toString()
-                        let hash = "test"
-                        newCrid.push(hash)
+                        let fileAsString = reader.result?.toString()
+                        if(fileAsString) {
+                            let hash = CryptoJS.SHA256(fileAsString).toString()
+                            newCrid.push(hash)
+                        } else {
+                            throw new Error('the string conversation of the file is undefined');
+                        }
                     } catch (err) {
                         setCrid([])
                         errors.set("file", ["There was an error when creating the hashsum for file " + file.name])

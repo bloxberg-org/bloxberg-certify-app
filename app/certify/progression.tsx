@@ -71,14 +71,21 @@ export default function Progression() {
         }
         let errors = new Map()
 
+        let {publicKey} = metaData
+        let metaDataWithoutPublicKey = {
+            authorName: metaData.authorName,
+            researchTitle: metaData.researchTitle,
+            email: metaData.email,
+        }
+
         setIsCertifying(true)
         axios
             .post(environmentVariables.api_url, {
-                'publicKey': "this.publicKey",
+                'publicKey': publicKey,
                 'crid': crid,
                 'cridType': 'sha2-256',
                 'enableIPFS': false,
-                'metadataJson': "metadataString"
+                'metadataJson':  JSON.stringify(metaDataWithoutPublicKey)
             }, {headers: {
                 "api_key": environmentVariables.api_key
             }})

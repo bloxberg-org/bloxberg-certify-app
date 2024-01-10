@@ -11,18 +11,10 @@ import dynamic from "next/dynamic";
 
 const DynamicBloxbergVerifier = dynamic(() => import('../ui/bloxberg-verifier'), {
     ssr: false,
-    loading: () => <div>Loading bloxberg verifier...</div>,
+    loading: () => <div className={'text-white'}>Loading bloxberg verifier...</div>,
 })
 
 export default function Verify() {
-    const [isVerifying, setIsVerifying] = React.useState(false);
-
-    const handleVerifyClick = async () => {
-        setIsVerifying(true)
-        await new Promise(r => setTimeout(r, 2000));
-        setIsVerifying(false)
-    };
-
     // @ts-ignore
     return (
         <div>
@@ -41,8 +33,6 @@ export default function Verify() {
                 <div className="pb-4">
                     <DynamicBloxbergVerifier></DynamicBloxbergVerifier>
                 </div>
-
-                <PrimaryButton title={isVerifying ? "verifying..." : "verify"} onClick={handleVerifyClick} isLoading={isVerifying}></PrimaryButton>
             </div>
 
         </div>
