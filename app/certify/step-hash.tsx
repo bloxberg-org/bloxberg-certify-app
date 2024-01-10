@@ -3,6 +3,7 @@ import RadioSelection from "@/app/ui/radio-selection";
 import TextInput from "@/app/ui/text-input";
 import FileUpload from "@/app/ui/file-upload";
 import {CertifyData} from "@/app/certify/progression";
+import sha256 from 'crypto-js/sha256';
 
 export default function StepHash({disabledInput, setErrors}:{disabledInput:boolean, setErrors: React.Dispatch<React.SetStateAction<Map<string, string[]>>>}) {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
@@ -23,7 +24,7 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
                     try {
                         let fileAsString = reader.result?.toString()
                         if(fileAsString) {
-                            let hash = CryptoJS.SHA256(fileAsString).toString()
+                            let hash = sha256(fileAsString).toString()
                             newCrid.push(hash)
                         } else {
                             throw new Error('the string conversation of the file is undefined');
