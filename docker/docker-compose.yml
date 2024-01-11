@@ -5,6 +5,5 @@ services:
     build:
       context: https://github.com/bloxberg-org/bloxberg-certify-app.git
       dockerfile: docker/Dockerfile
-      target: prod
     ports:
       - '3000:3000'
