@@ -87,7 +87,7 @@ export default function Progression() {
                 'enableIPFS': false,
                 'metadataJson':  JSON.stringify(metaDataWithoutPublicKey)
             }, {headers: {
-                "api_key": environmentVariables.api_key
+                'api_key': environmentVariables.api_key
             }})
             .then(res => {
                 console.log(res)
