@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from "react";
+import React, {useState} from "react";
 import StepHash from "@/app/certify/step-hash";
 import StepInfo from "@/app/certify/step-info";
 import StepItem from "@/app/certify/step-item";
@@ -80,7 +80,7 @@ export default function Progression() {
 
         setIsCertifying(true)
         axios
-            .post(environmentVariables.api_url, {
+            .post(environmentVariables.api_url + '/createBloxbergCertificate', {
                 'publicKey': publicKey,
                 'crid': crid,
                 'cridType': 'sha2-256',
@@ -105,7 +105,7 @@ export default function Progression() {
     };
 
     const downloadCertificate = () => {
-        axios.post(environmentVariables.api_url, dataUrl, {responseType: 'arraybuffer', headers: {
+        axios.post(environmentVariables.api_url + '/generatePDF', dataUrl, {responseType: 'arraybuffer', headers: {
                 'api_key': environmentVariables.api_key
             }})
             .then(response => {
