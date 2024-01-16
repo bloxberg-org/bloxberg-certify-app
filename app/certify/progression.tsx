@@ -90,7 +90,6 @@ export default function Progression() {
                 'api_key': environmentVariables.api_key
             }})
             .then(res => {
-                console.log(res)
                 setDataUrl(res.data)
                 nextStep();
             })
@@ -142,7 +141,7 @@ export default function Progression() {
             secondaryAction: resetProgression,
             stepTitle: "Download",
             errors: new Map(),
-            stepContent: <div className={`text-bloxberg-white ${stepIndex !== 2 ? 'hidden' : ''}`}>Transaction Confirmed! Select Finish to create your certificate.</div>
+            stepContent: <div className={`text-bloxberg-white ${stepIndex !== 2 ? 'hidden' : ''}`}>Transaction confirmed! You can download your certificate now.</div>
         }
     ]
 
