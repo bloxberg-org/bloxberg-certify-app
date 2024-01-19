@@ -57,7 +57,13 @@ export default function Progression() {
     }
 
     const generateCdir = () => {
-        nextStep()
+        if(crid.length === 0) {
+            setCridErrors(new Map([
+                ["hash", ["Hash must be non empty. Either select a file or enter a hash manually."]]
+            ]))
+        } else {
+            nextStep()
+        }
     }
 
     const validateMetaDataInput = () => {

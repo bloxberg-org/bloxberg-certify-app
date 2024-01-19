@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useContext, useState} from "react";
+import React, {ChangeEvent, useContext} from "react";
 import RadioSelection from "@/app/ui/radio-selection";
 import TextInput from "@/app/ui/text-input";
 import FileUpload from "@/app/ui/file-upload";
@@ -16,7 +16,7 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
     const onSelectedFileListChanged = (selectedFileList: FileList) => {
         let errors = new Map()
         let newCrid: string[] = []
-        Array.from(selectedFileList)?.forEach((file: File, index) => {
+        Array.from(selectedFileList)?.forEach((file: File, _) => {
             try {
                 let reader = new window.FileReader()
                 reader.readAsArrayBuffer(file)
@@ -49,7 +49,11 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
     }
 
     const textInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
-        setCrid([event.target.value])
+        if(event.target.value.length === 0){
+            setCrid([])
+        } else {
+            setCrid([event.target.value])
+        }
     };
 
     return (
