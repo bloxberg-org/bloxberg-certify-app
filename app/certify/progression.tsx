@@ -62,6 +62,7 @@ export default function Progression() {
                 ["hash", ["Hash must be non empty. Either select a file or enter a hash manually."]]
             ]))
         } else {
+            setCridErrors(new Map())
             nextStep()
         }
     }
