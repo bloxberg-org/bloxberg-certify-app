@@ -90,11 +90,17 @@ export default function Progression() {
                 'api_key': environmentVariables.api_key
             }})
             .then(res => {
-                setDataUrl(res.data)
-                nextStep();
+                if(res.data.errors !== undefined) {
+                    let error = ""
+                    res.data.errors.forEach((err: any) => error = error.concat(' ', err))
+                    throw new Error(error);
+                } else {
+                    setDataUrl(res.data)
+                    nextStep();
+                }
             })
             .catch(err => {
-                console.log('Error sending certificate data', err)
+                console.log(`Error sending certificate data: ${err}`)
                 errors.set("general", ["Error sending certificate data"])
             })
             .finally(() => {
