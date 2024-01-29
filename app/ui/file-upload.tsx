@@ -1,9 +1,8 @@
-import {ChangeEvent, Dispatch, DragEvent, SetStateAction, useRef, useState} from "react";
+import {ChangeEvent, DragEvent, useRef, useState} from "react";
 import { twMerge } from 'tailwind-merge'
 
-export default function FileUpload({disabledInput, onSelectedFileListChanged, textUnderlined, minorText}:{disabledInput?:boolean,
-    onSelectedFileListChanged: (fileList: FileList) => void, textUnderlined: string, minorText: string}) {
-    const [selectedFileList, setSelectedFileList] = useState<FileList | null>(null);
+export default function FileUpload({disabledInput, inputFileList, onSelectedFileListChanged, textUnderlined, minorText}:{disabledInput?:boolean,
+    inputFileList: FileList | null, onSelectedFileListChanged: (fileList: FileList) => void, textUnderlined: string, minorText: string}) {
     const [dragActive, setDragActive] = useState(false);
     const inputFile = useRef<HTMLInputElement | null>(null);
 
@@ -13,7 +12,6 @@ export default function FileUpload({disabledInput, onSelectedFileListChanged, te
 
     const onReceiveFiles = (fileList: FileList | null) => {
         if(fileList && fileList.length > 0){
-            setSelectedFileList(fileList)
             onSelectedFileListChanged(fileList)
         }
     }
@@ -56,7 +54,7 @@ export default function FileUpload({disabledInput, onSelectedFileListChanged, te
              onDragEnter={handleDrag}>
             <input type="file" className="hidden" ref={inputFile} onChange={onFileChange} multiple/>
             <div className="text-center text-bloxberg-blue-100 font-medium text-xl mb-4"><i className='bx bx-upload relative top-0.5'></i> <u>{textUnderlined}</u> {minorText}</div>
-            {getSelectedFilesHtml(selectedFileList)}
+            {getSelectedFilesHtml(inputFileList)}
             { dragActive && <div className={"absolute w-full h-full top-0 bottom-0 left-0 right-0"} onDragEnter={handleDrag} onDragLeave={handleDrag} onDragOver={handleDrag} onDrop={handleDrop}></div> }
         </div>
     )

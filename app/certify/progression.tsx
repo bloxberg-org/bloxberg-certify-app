@@ -17,6 +17,10 @@ export const CertifyData  = React.createContext<CertifyContext>({
         email: ''
     },
     setMetaData: () => {},
+    selectedHashFiles: null,
+    textInputValueHash: "",
+    setSelectedHashFiles: () => {},
+    setTextInputValueHash: () => {},
 });
 
 export default function Progression() {
@@ -26,6 +30,8 @@ export default function Progression() {
     const [dataUrl, setDataUrl] = useState<string>('');
     const [isCertifying, setIsCertifying] = useState(false);
     const [crid, setCrid] = useState<string[]>([]);
+    const [selectedHashFiles, setSelectedHashFiles] = useState<FileList | null>(null);
+    const [textInputValueHash, setTextInputValueHash] = useState<string>("");
     const [metaData, setMetaData] = useState<CertifyMetaData>({
         authorName: '',
         publicKey: '0x9858eC18a269EE69ebfD7C38eb297996827DDa98',
@@ -48,6 +54,14 @@ export default function Progression() {
 
     const resetProgression = () => {
         let nexStepIndex = 0;
+        setMetaData({
+            authorName: "",
+            email: "",
+            publicKey: "0x9858eC18a269EE69ebfD7C38eb297996827DDa98",
+            researchTitle: ""
+        })
+        setSelectedHashFiles(null)
+        setTextInputValueHash("")
         setStepIndex(nexStepIndex);
         scrollToStep(nexStepIndex);
     };
@@ -84,7 +98,6 @@ export default function Progression() {
             researchTitle: metaData.researchTitle,
             email: metaData.email,
         }
-
         setIsCertifying(true)
         axios
             .post(environmentVariables.api_url + '/createBloxbergCertificate', {
@@ -117,7 +130,7 @@ export default function Progression() {
     };
 
     const downloadCertificate = () => {
-        axios.post(environmentVariables.api_url + '/generatePDF', dataUrl, {responseType: 'arraybuffer', headers: {
+        axios.post(environmentVariables.api_url + '/generatePDF_Test', dataUrl, {responseType: 'arraybuffer', headers: {
                 'api_key': environmentVariables.api_key
             }})
             .then(response => {
@@ -150,7 +163,7 @@ export default function Progression() {
             id: "step-download",
             primaryAction: downloadCertificate,
             primaryActionTitle: "download",
-            secondaryActionTitle: "reset",
+            secondaryActionTitle: "certify more",
             secondaryAction: resetProgression,
             stepTitle: "Download",
             errors: new Map(),
@@ -161,14 +174,18 @@ export default function Progression() {
     return (
         <CertifyData.Provider value={{
             setCrid: setCrid,
+            setSelectedHashFiles: setSelectedHashFiles,
+            setTextInputValueHash: setTextInputValueHash,
             setMetaData: setMetaData,
             crid: crid,
+            selectedHashFiles: selectedHashFiles,
+            textInputValueHash: textInputValueHash,
             metaData: metaData
         }}>
             <ol className="w-full max-w-2xl">
                 {steps.map((step, index) => (
                     <StepItem key={step.id} id={step.id} stepTitle={step.stepTitle} currentIndex={stepIndex} stepItemIndex={index} maxStepIndex={steps.length-1} primaryActionTitle={step.primaryActionTitle}
-                              primaryAction={step.primaryAction} secondaryAction={step.secondaryAction} stepContent={step.stepContent}
+                              primaryAction={step.primaryAction} secondaryActionTitle={step.secondaryActionTitle} secondaryAction={step.secondaryAction} stepContent={step.stepContent}
                               disabledInput={stepIndex !== index} isLoading={isCertifying} isLoadingPrimaryActionTitle={step.id === "step-info" ? "certifying..." : undefined}
                     errors={step.errors}></StepItem>
                 ))}
@@ -194,6 +211,10 @@ export interface CertifyContext{
     setCrid: React.Dispatch<React.SetStateAction<string[]>>
     metaData: CertifyMetaData
     setMetaData: React.Dispatch<React.SetStateAction<CertifyMetaData>>
+    selectedHashFiles: FileList | null,
+    textInputValueHash: string,
+    setSelectedHashFiles: React.Dispatch<React.SetStateAction<FileList | null>>,
+    setTextInputValueHash: React.Dispatch<React.SetStateAction<string>>,
 }
 
 export interface CertifyMetaData{

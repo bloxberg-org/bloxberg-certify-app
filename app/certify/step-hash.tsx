@@ -7,7 +7,8 @@ import sha256 from 'crypto-js/sha256';
 
 export default function StepHash({disabledInput, setErrors}:{disabledInput:boolean, setErrors: React.Dispatch<React.SetStateAction<Map<string, string[]>>>}) {
     const [selectedIndex, setSelectedIndex] = React.useState(0);
-    const {setCrid } = useContext(CertifyData);
+    const {setCrid, selectedHashFiles, setSelectedHashFiles,
+        textInputValueHash, setTextInputValueHash  } = useContext(CertifyData);
     const onSelected = (selectedIndex: number) => {
         setCrid([])
         setSelectedIndex(selectedIndex)
@@ -46,6 +47,7 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
         })
         setErrors(errors)
         setCrid(newCrid)
+        setSelectedHashFiles(selectedFileList)
     }
 
     const textInputChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -54,6 +56,7 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
         } else {
             setCrid([event.target.value])
         }
+        setTextInputValueHash(event.target.value)
     };
 
     return (
@@ -64,10 +67,10 @@ export default function StepHash({disabledInput, setErrors}:{disabledInput:boole
             </div>
 
             {selectedIndex === 0 ? (
-                <FileUpload disabledInput={disabledInput} onSelectedFileListChanged={onSelectedFileListChanged}
+                <FileUpload inputFileList={selectedHashFiles} disabledInput={disabledInput} onSelectedFileListChanged={onSelectedFileListChanged}
                 textUnderlined={"Choose file"} minorText={"or drag and drop files here"}></FileUpload>
             ) : (
-                <TextInput labelText="Enter hash manually" onChangeHandler={textInputChangeHandler} labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
+                <TextInput value={textInputValueHash} labelText="Enter hash manually" onChangeHandler={textInputChangeHandler} labelRequired hintText="If you prefer generating your own hash for your data, enter it here." disabledInput={disabledInput}></TextInput>
             )}
         </div>
     )

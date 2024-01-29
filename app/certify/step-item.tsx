@@ -1,14 +1,12 @@
-import StepHash from "@/app/certify/step-hash";
 import SecondaryButton from "@/app/ui/secondary-button";
 import PrimaryButton from "@/app/ui/primary-button";
 import React, {MouseEventHandler} from "react";
-import Image from "next/image";
 
 export default function StepItem({id, stepTitle, currentIndex, stepItemIndex, maxStepIndex, primaryActionTitle, primaryAction,
-                                     secondaryAction, stepContent, disabledInput, isLoading, isLoadingPrimaryActionTitle="loading",
+                                     secondaryAction, secondaryActionTitle, stepContent, disabledInput, isLoading, isLoadingPrimaryActionTitle="loading",
                                      errors} :
 {id: string, stepTitle: string, currentIndex: number, stepItemIndex: number, maxStepIndex: number, primaryActionTitle: string,
-    primaryAction: MouseEventHandler<HTMLButtonElement> | undefined, secondaryAction: MouseEventHandler<HTMLButtonElement> | undefined,
+    primaryAction: MouseEventHandler<HTMLButtonElement> | undefined, secondaryActionTitle: string | undefined, secondaryAction: MouseEventHandler<HTMLButtonElement> | undefined,
     stepContent:  React.JSX.Element | undefined, disabledInput?:boolean, isLoading?: boolean, isLoadingPrimaryActionTitle?: string,
     errors: Map<string, string[]>}) {
     return (
@@ -42,8 +40,8 @@ export default function StepItem({id, stepTitle, currentIndex, stepItemIndex, ma
                             <></>
                         )}
                     <div className={`flex justify-between ${currentIndex !== stepItemIndex ? "hidden" : ""}`}>
-                        {currentIndex !== 0 && currentIndex !== maxStepIndex ? (
-                            <SecondaryButton title="back" onClick={secondaryAction} disabledInput={isLoading}></SecondaryButton>
+                        {secondaryActionTitle ? (
+                            <SecondaryButton title={secondaryActionTitle ?? ""} onClick={secondaryAction} disabledInput={isLoading}></SecondaryButton>
                         ) : <div></div>}
                         <PrimaryButton title={isLoading ? isLoadingPrimaryActionTitle : primaryActionTitle} onClick={primaryAction} isLoading={isLoading}></PrimaryButton>
                     </div>
