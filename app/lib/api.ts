@@ -24,7 +24,7 @@ export class Api {
     }
 
     public async downloadCertificate(data: any){
-        const response = await axios.post(`${this.baseUrl}/generatePDFTest?api_key=${this.apiKey}`, data, {responseType: 'arraybuffer', headers: {
+        const response = await axios.post(`${this.baseUrl}/generatePDFTest`, data, {responseType: 'arraybuffer', headers: {
                 'api_key': this.apiKey
             }})
         return response.data;
