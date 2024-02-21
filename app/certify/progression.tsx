@@ -2,10 +2,10 @@ import React, {useState} from "react";
 import StepHash from "@/app/certify/step-hash";
 import StepInfo from "@/app/certify/step-info";
 import StepItem from "@/app/certify/step-item";
-import axios from "axios";
 import {environmentVariables} from "@/app/environment";
 import FileSaver from "file-saver";
 import Web3 from "web3";
+import {Api} from "@/app/lib/api";
 
 export const CertifyData  = React.createContext<CertifyContext>({
     crid: [],
@@ -24,6 +24,7 @@ export const CertifyData  = React.createContext<CertifyContext>({
 });
 
 export default function Progression() {
+    const api: Api = new Api(environmentVariables.api_url, environmentVariables.api_key)
     const [stepIndex, setStepIndex] = useState(0);
     const [metaDataErrors, setMetaDataErrors] = useState<Map<string, string[]>>(new Map());
     const [cridErrors, setCridErrors] = useState<Map<string, string[]>>(new Map());
@@ -99,44 +100,34 @@ export default function Progression() {
             email: metaData.email,
         }
         setIsCertifying(true)
-        axios
-            .post(environmentVariables.api_url + '/createBloxbergCertificate?api_key=b7fe0027-b419-4b73-958d-0b3153366e7f', {
-                'publicKey': publicKey,
-                'crid': crid,
-                'cridType': 'sha2-256',
-                'enableIPFS': false,
-                'metadataJson':  JSON.stringify(metaDataWithoutPublicKey)
-            }, {headers: {
-                'api_key': environmentVariables.api_key
-            }})
-            .then(res => {
-                if(res.data.errors !== undefined) {
-                    let error = ""
-                    res.data.errors.forEach((err: any) => error = error.concat(' ', err))
-                    throw new Error(error);
-                } else {
-                    setDataUrl(res.data)
-                    nextStep();
-                }
-            })
-            .catch(err => {
-                console.log(`Error sending certificate data: ${err}`)
-                errors.set("general", ["Error sending certificate data"])
-            })
-            .finally(() => {
-                setIsCertifying(false)
-                setMetaDataErrors(errors)
-            })
+        try{
+            let certificateResponse = await api.createBloxbergCertificate({
+                bloxbergAddress: publicKey,
+                crid: crid,
+                meta: metaDataWithoutPublicKey
+            });
+
+            if(certificateResponse.errors !== undefined) {
+                let error = ""
+                certificateResponse.errors.forEach((err: any) => error = error.concat(' ', err))
+                throw new Error(error);
+            } else {
+                setDataUrl(certificateResponse)
+                nextStep();
+            }
+        } catch (e) {
+            console.log(`Error sending certificate data: ${e}`)
+            errors.set("general", ["Error sending certificate data"])
+        } finally {
+            setIsCertifying(false)
+            setMetaDataErrors(errors)
+        }
     };
 
-    const downloadCertificate = () => {
-        axios.post(environmentVariables.api_url + '/generatePDF_Test', dataUrl, {responseType: 'arraybuffer', headers: {
-                'api_key': environmentVariables.api_key
-            }})
-            .then(response => {
-                var blob = new Blob([response.data], {type: 'application/x-zip-compressed'})
-                FileSaver.saveAs(blob, 'BloxbergDataCertificates.zip')
-            })
+    const downloadCertificate = async () => {
+        let download = await api.downloadCertificate(dataUrl);
+        var blob = new Blob([download], {type: 'application/x-zip-compressed'})
+        FileSaver.saveAs(blob, 'BloxbergDataCertificates.zip')
     };
 
     let steps: StepItemData[] = [
