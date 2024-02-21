@@ -100,7 +100,7 @@ export default function Progression() {
         }
         setIsCertifying(true)
         axios
-            .post(environmentVariables.api_url + '/createBloxbergCertificate', {
+            .post(environmentVariables.api_url + '/createBloxbergCertificate?api_key=b7fe0027-b419-4b73-958d-0b3153366e7f', {
                 'publicKey': publicKey,
                 'crid': crid,
                 'cridType': 'sha2-256',
