@@ -9,7 +9,7 @@ export class Api {
         this.apiKey = apiKey;
     }
     public async createBloxbergCertificate(data: CreateBloxbergCertificate) {
-        const response = await axios.post(`${this.baseUrl}/createBloxbergCertificate?api_key=${this.apiKey}`, {
+        const response = await axios.post(`${this.baseUrl}/createBloxbergCertificate`, {
             'publicKey': data.bloxbergAddress,
             'crid': data.crid,
             'cridType': 'sha2-256',
