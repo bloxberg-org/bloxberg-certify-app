@@ -83,7 +83,7 @@ export default function Progression() {
     }
 
     const validateMetaDataInput = () => {
-        return Web3.utils.isAddress(metaData.publicKey)
+        return metaData.publicKey.length === 0 ? true : Web3.utils.isAddress(metaData.publicKey)
     }
 
     const certifyData = async  () => {
