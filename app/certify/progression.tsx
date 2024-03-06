@@ -35,7 +35,7 @@ export default function Progression() {
     const [textInputValueHash, setTextInputValueHash] = useState<string>("");
     const [metaData, setMetaData] = useState<CertifyMetaData>({
         authorName: '',
-        publicKey: '0x9858eC18a269EE69ebfD7C38eb297996827DDa98',
+        publicKey: '',
         researchTitle: '',
         email: ''
     });
@@ -58,7 +58,7 @@ export default function Progression() {
         setMetaData({
             authorName: "",
             email: "",
-            publicKey: "0x9858eC18a269EE69ebfD7C38eb297996827DDa98",
+            publicKey: "",
             researchTitle: ""
         })
         setSelectedHashFiles(null)
@@ -102,7 +102,8 @@ export default function Progression() {
         setIsCertifying(true)
         try{
             let certificateResponse = await api.createBloxbergCertificate({
-                bloxbergAddress: publicKey,
+                // the next line is a requested behaviour
+                bloxbergAddress: publicKey.length === 0 ? '0x9858eC18a269EE69ebfD7C38eb297996827DDa98' : publicKey,
                 crid: crid,
                 meta: metaDataWithoutPublicKey
             });
