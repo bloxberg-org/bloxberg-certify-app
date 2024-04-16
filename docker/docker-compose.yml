@@ -1,9 +1,0 @@
-version: '3.8'
-
-services:
-  web:
-    build:
-      context: https://github.com/bloxberg-org/bloxberg-certify-app.git
-      dockerfile: docker/Dockerfile
-    ports:
-      - '3000:3000'
